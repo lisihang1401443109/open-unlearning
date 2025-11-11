@@ -51,4 +51,4 @@ trainer:
     # optim: paged_adamw_32bit
     # optim: adamw_torch
 
-task_name: ???
+task_name: MUSE_BASELINE_7B

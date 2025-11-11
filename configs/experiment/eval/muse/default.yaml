@@ -16,4 +16,4 @@ eval:
     data_split: ${data_split}
     retain_logs_path: ${retain_logs_path}
   
-task_name: ???
+task_name: MUSE_BASELINE_EVAL_7B
