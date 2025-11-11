@@ -22,6 +22,9 @@ trainers=(
     # "SimNPO"
 )
 
+# create project root 
+root_dir=/mnt/results/open-unlearning/
+
 # #########################################################
 # #################### MUSE Unlearning ####################
 # #########################################################
@@ -32,14 +35,14 @@ for data_split in "${data_splits[@]}"; do
 
         task_name=muse_${model}_${data_split}_${trainer}
 
-        CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file configs/accelerate/default_config.yaml --main_process_port $MASTER_PORT \
+        CUDA_VISIBLE_DEVICES=0 accelerate launch --config_file configs/accelerate/default_config.yaml --main_process_port $MASTER_PORT \
         src/train.py --config-name=unlearn.yaml \
         experiment=unlearn/muse/default.yaml \
         model=${model} \
         data_split=${data_split} \
         trainer=${trainer} \
         task_name=${task_name} \
-        retain_logs_path=saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json \
+        retain_logs_path=${root_dir}/saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json \
         trainer.args.per_device_train_batch_size=${per_device_train_batch_size} \
         trainer.args.gradient_accumulation_steps=${gradient_accumulation_steps} \
         trainer.args.ddp_find_unused_parameters=true \
@@ -50,9 +53,9 @@ for data_split in "${data_splits[@]}"; do
         data_split=${data_split} \ 
         task_name=${task_name} \
         model=${model} \
-        model.model_args.pretrained_model_name_or_path=saves/unlearn/${task_name} \
-        paths.output_dir=saves/unlearn/${trainer}/evals \
-        retain_logs_path=saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json
+        model.model_args.pretrained_model_name_or_path=${root_dir}/saves/unlearn/${task_name} \
+        paths.output_dir=${root_dir}/saves/unlearn/${trainer}/evals \
+        retain_logs_path=${root_dir}/saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json
     done
 done
 
@@ -77,7 +80,7 @@ for data_split in "${data_splits[@]}"; do
             forget_split=${scal} \
             trainer=${trainer} \
             task_name=${task_name} \
-            retain_logs_path=saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json \
+            retain_logs_path=${root_dir}/saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json \
             trainer.args.per_device_train_batch_size=${per_device_train_batch_size} \
             trainer.args.gradient_accumulation_steps=${gradient_accumulation_steps} \
             trainer.args.ddp_find_unused_parameters=true \
@@ -88,9 +91,9 @@ for data_split in "${data_splits[@]}"; do
             data_split=${data_split} \ 
             task_name=${task_name} \
             model=${model} \
-            model.model_args.pretrained_model_name_or_path=saves/unlearn/${task_name} \
-            paths.output_dir=saves/unlearn/${trainer}/evals \
-            retain_logs_path=saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json
+            model.model_args.pretrained_model_name_or_path=${root_dir}/saves/unlearn/${task_name} \
+            paths.output_dir=${root_dir}/saves/unlearn/${trainer}/evals \
+            retain_logs_path=${root_dir}/saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json
         done
     done
 done
@@ -117,7 +120,7 @@ for data_split in "${data_splits[@]}"; do
             data_split=${data_split} \
             trainer=${trainer} \
             task_name=${task_name} \
-            retain_logs_path=saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json \
+            retain_logs_path=${root_dir}/saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json \
             trainer.args.per_device_train_batch_size=${per_device_train_batch_size} \
             trainer.args.gradient_accumulation_steps=${gradient_accumulation_steps} \
             trainer.args.ddp_find_unused_parameters=true \
@@ -128,11 +131,11 @@ for data_split in "${data_splits[@]}"; do
             data_split=${data_split} \ 
             task_name=${task_name} \
             model=${model} \
-            model.model_args.pretrained_model_name_or_path=saves/unlearn/${task_name} \
-            paths.output_dir=saves/unlearn/${trainer}/evals \
-            retain_logs_path=saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json
+            model.model_args.pretrained_model_name_or_path=${root_dir}/saves/unlearn/${task_name} \
+            paths.output_dir=${root_dir}/saves/unlearn/${trainer}/evals \
+            retain_logs_path=${root_dir}/saves/eval/muse_${model}_${data_split}_retrain/MUSE_EVAL.json
 
-            model_path=saves/unlearn/${task_name}
+            model_path=${root_dir}/saves/unlearn/${task_name}
         done
     done
 done
