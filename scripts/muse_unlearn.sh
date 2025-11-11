@@ -8,7 +8,7 @@ per_device_train_batch_size=4
 gradient_accumulation_steps=8
 
 
-model=Llama-2-7b-hf
+model=Llama-3.2-3B-Instruct
 
 data_splits=(
     "News"
@@ -17,9 +17,9 @@ data_splits=(
 
 trainers=(
     "GradAscent"
-    "GradDiff"
-    "NPO"
-    "SimNPO"
+    # "GradDiff"
+    # "NPO"
+    # "SimNPO"
 )
 
 # #########################################################
