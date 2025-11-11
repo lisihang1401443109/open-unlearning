@@ -8,6 +8,6 @@ machine_rank: 0
 main_process_ip: null
 main_process_port: null
 main_training_function: main
-num_machines: 2
+num_machines: 1
 num_processes: 8
 use_cpu: false
