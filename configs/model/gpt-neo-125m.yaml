@@ -1,0 +1,16 @@
+model_args:
+  pretrained_model_name_or_path: "EleutherAI/gpt-neo-125m"
+  torch_dtype: float16  # Using float16 for better memory efficiency on smaller GPUs
+  device_map: "auto"
+
+tokenizer_args:
+  pretrained_model_name_or_path: "EleutherAI/gpt-neo-125m"
+  padding_side: "left"
+  truncation_side: "left"
+
+template_args:  # Used in creating prompts for the dataset. See src/data/utils.py#preprocess_chat_instance.
+  apply_chat_template: False
+  user_start_tag: "Question: "
+  user_end_tag: "\n"
+  asst_start_tag: "Answer: "
+  asst_end_tag: "\n\n"
